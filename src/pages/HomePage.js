@@ -35,17 +35,26 @@ function HomePage() {
 
   async function fetchComplaints() {
     const apiData = await API.graphql({ query: listComplaints });
+    const complaintsFromAPI = apiData.data.listComplaints.items;
+    await Promise.all(
+      complaintsFromAPI.map(async (complaint) => {
+        if (complaint.image) {
+          const image = await Storage.get(complaint.image);
+          complaint.image = image;
+        }
+        return complaint;
+      })
+    );
     setComplaints(apiData.data.listComplaints.items);
   }
 
-  const onUploadFile = (e) => {
-    e.preventDefault();
+  async function onChange(e) {
+    if (!e.target.files[0]) return;
     const file = e.target.files[0];
-    const name = file.name;
-    Storage.put(name, file, { contentType: "image/*" }).then(() => {
-      this.setState({ file: name });
-    });
-  };
+    setFormData({ ...formData, image: file.name });
+    await Storage.put(file.name, file);
+    fetchComplaints();
+  }
 
   async function createComplaint() {
     if (!formData.name || !formData.description) return;
@@ -53,6 +62,10 @@ function HomePage() {
       query: createComplaintMutation,
       variables: { input: formData },
     });
+    if (formData.image) {
+      const image = await Storage.get(formData.image);
+      formData.image = image;
+    }
     setComplaints([...complaints, formData]);
     setFormData(initialFormState);
     console.log(formData);
@@ -166,7 +179,7 @@ function HomePage() {
 
             <label>
               Upload Picture:
-              <input type="file" onChange={onUploadFile} />
+              <input type="file" onChange={onChange} />
             </label>
 
             <button type="submit" value="Submit" onClick={createComplaint}>
@@ -183,6 +196,9 @@ function HomePage() {
                   <button onClick={() => deleteComplaint(complaint)}>
                     Delete note
                   </button>
+                  {complaint.image && (
+                    <img src={complaint.image} style={{ width: 400 }} />
+                  )}
                 </div>
               ))}
             </div>
