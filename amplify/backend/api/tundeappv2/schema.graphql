@@ -1,0 +1,10 @@
+type Complaint @model {
+  id: ID!
+  name: String!
+  business_name: String
+  email: String
+  date: String
+  area: String
+  description: String
+  image: String
+}

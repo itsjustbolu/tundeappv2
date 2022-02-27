@@ -20,7 +20,7 @@ const initialFormState = {
   business_name: "",
   email: "",
   date: "",
-  area_of_location: "",
+  area: "",
   description: "",
   image: "",
 };
@@ -35,16 +35,6 @@ function HomePage() {
 
   async function fetchComplaints() {
     const apiData = await API.graphql({ query: listComplaints });
-    const complaintsFromAPI = apiData.data.listComplaints.items;
-    await Promise.all(
-      complaintsFromAPI.map(async (complaint) => {
-        if (complaint.image) {
-          const image = await Storage.get(complaint.image);
-          complaint.image = image;
-        }
-        return complaint;
-      })
-    );
     setComplaints(apiData.data.listComplaints.items);
   }
 
@@ -54,10 +44,6 @@ function HomePage() {
       query: createComplaintMutation,
       variables: { input: formData },
     });
-    if (formData.image) {
-      const image = await Storage.get(formData.image);
-      formData.image = image;
-    }
     setComplaints([...complaints, formData]);
     setFormData(initialFormState);
   }
@@ -184,12 +170,9 @@ function HomePage() {
                 <div key={complaint.id || complaint.name}>
                   <h2>{complaint.name}</h2>
                   <p>{complaint.description}</p>
-                  {/* <button onClick={() => deleteComplaint(complaint)}>
+                  <button onClick={() => deleteComplaint(complaint)}>
                     Delete note
-                  </button> */}
-                  {/* {complaint.image && (
-                    <img src={complaint.image} style={{ width: 400 }} />
-                  )} */}
+                  </button>
                 </div>
               ))}
             </div>
