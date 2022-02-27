@@ -38,6 +38,15 @@ function HomePage() {
     setComplaints(apiData.data.listComplaints.items);
   }
 
+  const onUploadFile = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    const name = file.name;
+    Storage.put(name, file, { contentType: "image/*" }).then(() => {
+      this.setState({ file: name });
+    });
+  };
+
   async function createComplaint() {
     if (!formData.name || !formData.description) return;
     await API.graphql({
@@ -46,6 +55,7 @@ function HomePage() {
     });
     setComplaints([...complaints, formData]);
     setFormData(initialFormState);
+    console.log(formData);
   }
 
   async function deleteComplaint({ id }) {
@@ -156,7 +166,7 @@ function HomePage() {
 
             <label>
               Upload Picture:
-              <input type="file" />
+              <input type="file" onChange={onUploadFile} />
             </label>
 
             <button type="submit" value="Submit" onClick={createComplaint}>
