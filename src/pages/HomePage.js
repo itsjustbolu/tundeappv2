@@ -66,7 +66,7 @@ function HomePage() {
           <br />
 
           <form>
-            <label for="name">
+            <label htmlFor="name">
               Name:
               <input
                 type="text"
