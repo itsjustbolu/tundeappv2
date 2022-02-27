@@ -10,6 +10,11 @@
       "StackName": "amplify-tundeappv2-dev-151524",
       "StackId": "arn:aws:cloudformation:us-east-1:480428003157:stack/amplify-tundeappv2-dev-151524/62f5ec40-9812-11ec-84ca-0ed687792769",
       "AmplifyAppId": "d2oee9f98hewkl"
+    },
+    "categories": {
+      "auth": {
+        "tundeappv2c9937295": {}
+      }
     }
   }
 }
