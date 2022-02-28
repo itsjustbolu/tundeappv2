@@ -146,7 +146,7 @@ function HomePage() {
                 value={formData.date}
               />
             </label>
-
+            <br />
             <label>
               Area:
               <input
@@ -197,7 +197,11 @@ function HomePage() {
                     Delete note
                   </button>
                   {complaint.image && (
-                    <img src={complaint.image} style={{ width: 400 }} />
+                    <img
+                      alt="complaint"
+                      src={complaint.image}
+                      style={{ width: 400 }}
+                    />
                   )}
                 </div>
               ))}
