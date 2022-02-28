@@ -186,21 +186,7 @@ function HomePage() {
               SUBMIT COMPLAINT
             </button>
           </form>
-          <div>
-            List of Complaints
-            <div style={{ marginBottom: 30 }}>
-              {complaints.map((complaint) => (
-                <div key={complaint.id || complaint.name}>
-                  <h2>Hello {complaint.name}</h2>
-                  <p>
-                    Thank you for your submission. Your complaint for{" "}
-                    {complaint.business_name} has been received
-                  </p>
-                  <p>We will be in touch shortly to resolve the issue.</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <div>List of Complaints</div>
         </Col>
       </Row>
     </Container>
