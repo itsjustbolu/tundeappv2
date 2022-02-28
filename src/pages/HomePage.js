@@ -191,18 +191,12 @@ function HomePage() {
             <div style={{ marginBottom: 30 }}>
               {complaints.map((complaint) => (
                 <div key={complaint.id || complaint.name}>
-                  <h2>{complaint.name}</h2>
-                  <p>{complaint.description}</p>
-                  <button onClick={() => deleteComplaint(complaint)}>
-                    Delete note
-                  </button>
-                  {complaint.image && (
-                    <img
-                      alt="complaint"
-                      src={complaint.image}
-                      style={{ width: 400 }}
-                    />
-                  )}
+                  <h2>Hello {complaint.name}</h2>
+                  <p>
+                    Thank you for your submission. Your complaint for{" "}
+                    {complaint.business_name} has been received
+                  </p>
+                  <p>We will be in touch shortly to resolve the issue.</p>
                 </div>
               ))}
             </div>
